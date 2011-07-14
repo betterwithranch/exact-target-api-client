@@ -13,6 +13,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.5.0}
   s.summary = %q{Ruby client for ExactTarget SOAP api}
 
+  s.add_development_dependency('delayed_job')
+
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
