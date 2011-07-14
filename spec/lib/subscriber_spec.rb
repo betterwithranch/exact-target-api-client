@@ -53,11 +53,11 @@ describe ExactTarget::Subscriber do
 
     it 'should call triggered send after user is added to list' do
       sub = ExactTarget::Subscriber.new
-      attr = {"First Name" => user.first_name, "Last Name" => user.last_name, "Zipcode" => user.zip_code}
-      sub.should_receive(:send_request).with(sub.create_body(user.email, attr))
+      expected = {"First Name" => user.first_name, "Last Name" => user.last_name, "Zipcode" => user.zip_code}
+      sub.should_receive(:send_request).with(sub.create_body(user.email, expected))
 
       sub.should_receive(:queue_triggered_send).with(:welcome, user.email)
-      sub.create(attr.merge(:email => user.email))
+      sub.create(:first_name => user.first_name, :last_name => user.last_name, :zip_code => user.zip_code, :email => user.email)
     end
   end
 
@@ -76,7 +76,7 @@ describe ExactTarget::Subscriber do
 
       user.email = 'craig.israel@healthways.com'
 
-      ExactTarget::Subscriber.new.create(:email => user.email, "First Name" => user.first_name, "Last Name" => user.last_name, "Zipcode" => user.zip_code) 
+      ExactTarget::Subscriber.new.create(:email => user.email, :first_name => user.first_name, :last_name => user.last_name, :zip_code => user.zip_code) 
     end
   end
 

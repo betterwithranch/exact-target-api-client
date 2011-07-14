@@ -1,9 +1,16 @@
 class ExactTarget::Subscriber < ExactTarget::Base
 
-  def create(attr)
+  def create(attr = {})
       email = attr.delete(:email)
-      send_request create_body(email, attr)
+      mail_attributes = {}
+      mail_attributes["First Name"] = attr.delete(:first_name)
+      mail_attributes["Last Name"] = attr.delete(:last_name)
+      mail_attributes["Zipcode"] = attr.delete(:zip_code)
+      mail_attributes.merge(attr)
+
+      send_request create_body(email, mail_attributes)
       queue_triggered_send(ExactTarget::Base.welcome_send_definition, email)
+      self
   end
 
   def create_body(email, attr)
