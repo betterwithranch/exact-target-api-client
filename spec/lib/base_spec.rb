@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'delayed_job'
+require 'savon'
 
 describe ExactTarget::Base do
   describe '#send_request' do
