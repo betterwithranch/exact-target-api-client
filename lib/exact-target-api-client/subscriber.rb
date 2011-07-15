@@ -9,7 +9,7 @@ class ExactTarget::Subscriber < ExactTarget::Base
       mail_attributes.merge(attr)
 
       send_request create_body(email, mail_attributes)
-      queue_triggered_send(ExactTarget::Base.welcome_send_definition, email)
+      queue_triggered_send(:welcome, email)
       self
   end
 

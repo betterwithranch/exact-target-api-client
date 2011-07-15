@@ -2,6 +2,13 @@ require 'spec_helper'
 require 'savon'
 
 describe ExactTarget::Base do
+  before :all do
+    ExactTarget::Base.send_definitions.merge! :employee_welcome => 'ws_employee_welcome', 
+      :wba => 'ws_employee_wba',
+      :leadership_invite => 'ws_employee_leadership',
+      :welcome => '21297'
+  end
+
   describe '#send_request' do
     let(:response) do
       r = {:create_response => {:results => {:status_code => 'OK'}}}
