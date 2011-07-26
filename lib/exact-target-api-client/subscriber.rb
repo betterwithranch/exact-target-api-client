@@ -3,9 +3,9 @@ class ExactTarget::Subscriber < ExactTarget::Base
   def create(attributes = {})
       attr = attributes.clone
       email = attr.delete(:email)
-      skip_welcome = attr.delete(:skip_welcome)
       options = attr.delete(:options) || {}
       lists = options.delete(:lists) || []
+      skip_welcome = options.delete(:skip_welcome)
 
       mail_attributes = {}
       mail_attributes["First Name"] = attr.delete(:first_name)
@@ -13,8 +13,8 @@ class ExactTarget::Subscriber < ExactTarget::Base
       mail_attributes["Zipcode"] = attr.delete(:zip_code)
       mail_attributes.merge(attr)
 
-      send_request create_body(email, mail_attributes)
-      queue_triggered_send(:welcome, email)
+      send_request create_body(email, mail_attributes, lists)
+      queue_triggered_send(:welcome, email) unless skip_welcome
       self
   end
 

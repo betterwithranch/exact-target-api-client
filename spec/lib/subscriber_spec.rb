@@ -79,6 +79,16 @@ describe ExactTarget::Subscriber do
       sub.should_receive(:queue_triggered_send).with(:welcome, user.email)
       sub.create(:first_name => user.first_name, :last_name => user.last_name, :zip_code => user.zip_code, :email => user.email)
     end
+
+    it 'should not call triggered send after user is added if skip welcome is true' do
+      sub = ExactTarget::Subscriber.new
+      expected = {"First Name" => user.first_name, "Last Name" => user.last_name, "Zipcode" => user.zip_code}
+      sub.should_receive(:send_request).with(sub.create_body(user.email, expected))
+
+      sub.should_not_receive(:queue_triggered_send)
+      sub.create(:first_name => user.first_name, :last_name => user.last_name, :zip_code => user.zip_code, :email => user.email,
+          :options => {:skip_welcome => true})
+    end
   end
 
   describe '#create_client' do
