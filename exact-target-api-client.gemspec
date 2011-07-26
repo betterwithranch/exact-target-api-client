@@ -13,6 +13,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.5.0}
   s.summary = %q{Ruby client for ExactTarget SOAP api}
 
+  s.add_development_dependency('savon', '~> 0.9.1')
+
   s.add_dependency('delayed_job')
   s.add_dependency('savon', '~> 0.9.1')
 

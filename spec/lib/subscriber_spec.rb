@@ -37,7 +37,27 @@ describe ExactTarget::Subscriber do
       body = sub.create_body(user.email, "First Name" => user.first_name, "Last Name" => user.last_name,
           "Zipcode" => user.zip_code)
 
-      body['Objects']['Lists']['ID'].should == ExactTarget::Base.master_list_id
+      body['Objects']['Lists']['ID'][0].should == ExactTarget::Base.master_list_id
+    end
+
+    it 'should add lists provided as arguments' do
+      sub = ExactTarget::Subscriber.new
+
+      body = sub.create_body(user.email, {"First Name" => user.first_name, "Last Name" => user.last_name,
+          "Zipcode" => user.zip_code}, [123])
+
+      body['Objects']['Lists']['ID'][0].should == 123
+      body['Objects']['Lists']['ID'][1].should == ExactTarget::Base.master_list_id
+    end
+
+    it 'should not add master list if it was included in lists option' do
+      sub = ExactTarget::Subscriber.new
+      body = sub.create_body(user.email, {"First Name" => user.first_name, "Last Name" => user.last_name,
+          "Zipcode" => user.zip_code}, [ExactTarget::Base.master_list_id, 123])
+
+      body['Objects']['Lists']['ID'].length.should == 2
+      body['Objects']['Lists']['ID'][0].should == ExactTarget::Base.master_list_id
+      body['Objects']['Lists']['ID'][1].should == 123
     end
 
     it 'should use update or add option' do
@@ -76,7 +96,8 @@ describe ExactTarget::Subscriber do
 
       user.email = 'craig.israel@healthways.com'
 
-      ExactTarget::Subscriber.new.create(:email => user.email, :first_name => user.first_name, :last_name => user.last_name, :zip_code => user.zip_code) 
+      ExactTarget::Subscriber.new.create(:email => user.email, :first_name => user.first_name, :last_name => user.last_name, :zip_code => user.zip_code,
+          :options => {:lists => [5832807]}) 
     end
   end
 

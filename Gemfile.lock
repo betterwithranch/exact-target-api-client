@@ -69,4 +69,5 @@ DEPENDENCIES
   exact-target-api-client!
   rspec (~> 2.6.0)
   ruby-debug19
+  savon (~> 0.9.1)
   webmock (~> 1.6.4)
