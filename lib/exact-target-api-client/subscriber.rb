@@ -4,6 +4,7 @@ class ExactTarget::Subscriber < ExactTarget::Base
       attr = attributes.clone
       email = attr.delete(:email)
       options = attr.delete(:options) || {}
+      options = options.clone
       lists = options.delete(:lists) || []
       skip_welcome = options.delete(:skip_welcome)
 
@@ -43,10 +44,3 @@ class ExactTarget::Subscriber < ExactTarget::Base
   end
 
 end
-
-#
-#            [
-#              build_attribute("First Name", user.profile.first_name),
-#              build_attribute("Last Name", user.profile.last_name),
-#              build_attribute("Zipcode", user.profile.zip_code)
-#            ]
