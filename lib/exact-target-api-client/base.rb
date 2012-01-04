@@ -65,11 +65,7 @@ class ExactTarget::Base
   end
 
   def build_attributes(attr)
-    attributes = []
-    attr.each do |k,v|
-      attributes << build_attribute(k, v)
-    end
-    attributes
+    attr.map {|k,v| build_attribute(k,v)}
   end
 
   def queue_triggered_send(message_type, recipient, attributes = {}) 

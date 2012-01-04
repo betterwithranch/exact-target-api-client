@@ -2,6 +2,14 @@ require 'spec_helper'
 require 'savon'
 
 describe ExactTarget::Base do
+  describe '#build_attribute' do
+
+    it 'should build attribute list from hash' do
+      b = ExactTarget::Base.new
+      b.build_attributes({ "address" => "123 Main St"}).should == [{"Name" => "address", "Value" => "123 Main St"}]
+    end
+  end
+
   before :all do
     ExactTarget::Base.send_definitions.merge! :employee_welcome => 'ws_employee_welcome', 
       :wba => 'ws_employee_wba',
