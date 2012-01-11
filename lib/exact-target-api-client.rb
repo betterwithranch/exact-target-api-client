@@ -1,4 +1,7 @@
 module ExactTarget; end
-require 'exact-target-api-client/base.rb'
-require 'exact-target-api-client/subscriber.rb'
-require 'exact-target-api-client/errors.rb'
+
+lib_dir = File.join(File.dirname(__FILE__), 'exact-target-api-client')
+
+require File.join(lib_dir, 'base.rb')
+require File.join(lib_dir, 'subscriber.rb')
+require File.join(lib_dir, 'errors.rb')
